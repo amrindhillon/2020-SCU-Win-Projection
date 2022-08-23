@@ -1,0 +1,35 @@
+#Importing the Libraries
+import numpy as np
+import matplotlib.pyplot as plt import pandas as pd
+import seaborn as sns %matplotlib inline
+
+#Importing the dataset and extracting the independent and dependent variables
+df = pd.read_excel('/Users/AmrinSinghDhillon/Desktop/WIN PROJECTION.xlsx') X = df.iloc[:, :-1].values
+Y = df.iloc[:, 4].values
+
+df
+
+# Data Visualization
+# Building the Correlation Matrix
+sns.heatmap(df.corr())
+
+# Splitting the dataset into the Training set and Test set
+from sklearn.model_selection import train_test_split
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.2, random_state = 0)
+
+ # Fitting Multiple Linear Regression to the Training Set
+from sklearn.linear_model import LinearRegression 
+regressor = LinearRegression() 
+regressor.fit(X_train, Y_train)
+
+ # Predicting the Test set results
+Y_pred = regressor.predict(X_test) Y_pred
+
+ # Calculating the Coefficients
+print(regressor.coef_)
+
+# Calculating the Intercept
+print(regressor.intercept_)
+
+# Calculating the R squared value
+from sklearn.metrics import r2_score r2_score(Y_test, Y_pred)
